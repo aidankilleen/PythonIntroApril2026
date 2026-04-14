@@ -15,6 +15,7 @@ class User():
     def __repr__(self):
         return str(self)
 
+
 if __name__ == "__main__":
 
     users = [User(1, "Alice", "alice@gmail.com", True), 
