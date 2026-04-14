@@ -15,6 +15,17 @@ class UserDao():
         # read the whole database in one line!
         users = [User(id, name, email, active) for id, name, email, active in cur]
         return users
+    
+    def add_user(self, user:User):
+        sql = f"""INSERT INTO users
+                (name, email, active)
+                VALUES(
+                    '{user.name}', 
+                    '{user.email}', 
+                    {1 if user.active else 0})
+        """
+        self.conn.execute(sql)
+        pass
 # Dao
 # Data Access Object
 # put all db operations into a single class
@@ -23,6 +34,9 @@ class UserDao():
 if __name__ == "__main__":
 
     dao = UserDao()
+
+    new_user = User(name="New user", email="new.user@gmail.com")
+    dao.add_user(new_user)
 
     users = dao.get_users()
     for user in users:
