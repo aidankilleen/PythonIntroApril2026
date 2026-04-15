@@ -44,24 +44,19 @@ class UserDao():
         """
 
         # TODO fix this method
-        raise NotImplementedError("not working")
+        #raise NotImplementedError("not working")
     
 
-        #sql = "SELECT * FROM users WHERE id=?"
-        #cur = self.conn.execute(sql, (id,))
-        sql = f"SELECT * FROM users WHERE id={id_to_find}"
-        cur = self.conn.execute(sql)
-  
-        if cur.arraysize == 1:
-            record = cur.fetchone()
-            print (type(record))
-            print (record)
-
-
-            idd, name, email, active = record
-            return User(idd, name, email, active)
-        else:
+        sql = "SELECT * FROM users WHERE id=?"
+        cur = self.conn.execute(sql, (id_to_find,))
+        #sql = f"SELECT * FROM users WHERE id={id_to_find}"
+        #cur = self.conn.execute(sql)
+        record = cur.fetchone()
+        if record == None:
             raise LookupError(f"User {id_to_find} not found")
+
+        idd, name, email, active = record
+        return User(idd, name, email, active)
     
     def add_user(self, user:User):
         """add a user to the database
@@ -138,7 +133,11 @@ if __name__ == "__main__":
 
     print (user)
 
-    user = dao.get_user_by_id(99999)
+    try:
+        user = dao.get_user_by_id(99999)
+
+    except:
+        print ("user not found")
 
 
 
