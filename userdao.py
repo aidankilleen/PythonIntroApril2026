@@ -49,8 +49,6 @@ class UserDao():
 
         sql = "SELECT * FROM users WHERE id=?"
         cur = self.conn.execute(sql, (id_to_find,))
-        #sql = f"SELECT * FROM users WHERE id={id_to_find}"
-        #cur = self.conn.execute(sql)
         record = cur.fetchone()
         if record == None:
             raise LookupError(f"User {id_to_find} not found")
